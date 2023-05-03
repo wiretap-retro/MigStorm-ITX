@@ -4,7 +4,7 @@ A 68000 socketed ITX form factor Minimig.
 ![pic](pic.png)
 
 ## Info
-Tested by Zenon to boot with Pistorm and CaffieneOS. The board still needs further testing for complete functionality, and it needs more general trace cleanup/enhancement. Build at your own risk.
+Tested by Zenon to boot with Pistorm and CaffieneOS. The board still needs further testing to confirm complete functionality. It also needs more general trace cleanup/enhancement. Build at your own risk.
 
 ## Rev History
 v0.4 -- Corrected PS/2 Mouse & Keyboard pinout \
