@@ -1,0 +1,116 @@
+	FAQ
+
+- I developed it for fun and mainly for my own use.
+- For what I'm using It's working flawlessly.
+- I find time to update and to patch Tinybld (for other devices),
+  according to (some) users suggestions, once every several months;
+  Email with comments are welcome, but
+  I cannot interrupt myself (from the projects I'm working) every day
+  to analyze and reply right away to emails,
+  but I try to investigate the problems and reply to emails, 
+  even if it takes a week or so.
+
+Q: I've got errors when assembling the .asm file
+A: Make sure the three .inc files are in the parent directory (../)
+
+Q: How to use other baud rates?
+A: The baud rate is now editable, and you can write any baud you want.
+
+Q: I tried to make it work for PICzzzz, and it's not working.
+A: Use the "logdetails" command to learn more.
+   You can say what you have tried, what errors have obtained,
+   and when I will have some time (and maybe a simmilar PIC to debug)
+   I will investigate the problem.
+
+Q: I cannot see the right side of the application.
+A: This is caused by setting different DPI settings in Windows;
+
+
+How to hack the program:
+
+Q: What about the communication protocol?
+A: If you need the protocol, I assume you are a competent person
+   and can figure it out by yourself. The comments in the asm file
+   (PC_flash and PIC_response) and the "logdetails" command are
+   left there on purpose for those eager to toy with the protocol.
+   And more I added 2 flowcharts for the PIC programs.
+
+Q: How to work with another PIC that it's not listed in icdpictypes.inc?
+A: You'll have to trick the PC application 
+   Search among the list in icdpictypes.inc for a model that is similar
+   to your PIC, and has THE SAME amount of Flash; replace the entry
+   with your model, but keep the ID and max_flash unchanged.
+
+
+1.93 (Dec.2006)
+    add NOP fix for buggy chip 252
+    generic PIC types (based on flash size)
+    Command line options:
+    tinybldwin test.hex /com1 /b115200
+    exit codes: 0=OK 1=bad_param 3=ErrWrite
+    try not to toggle RTS/DTR at open port
+    separate baud for terminal
+    option to use DRT for reset
+    fix hex for mikro C/pascal
+    fix recent-list
+
+1.9 (Aug.2005)
+	- dsPIC
+	- nicer 16F88, 18Fx55usb
+
+1.8 (May.2005)
+	- Terminal
+	- Adjustable Timeout
+	- Search for COMs
+
+1.73(Apr.2005)
+	- RTS pulse option
+	- Abort btn.
+	- fixed bugs for large memory PICs (like 8720)
+	- more detailed logging
+	- fix for 2620
+
+1.7(Oct.2004)
+	- any COM port (just write: COMx in the COM box)
+	- any baud rate (just write another baud in the BaudRate box)
+	- can write a hex file name in the (real) command line => auto. write that file
+	- RecentlyUsedList
+	- variable "search delay"
+	- an option to increase the wait time for a response from PIC after each command;
+	- user selectable codes to be sent before searching for bootloader 
+	    (eg. to perform a remote reset)
+	- option to pulse RTS line for software trigered reset
+	- selectable PC identifier (other than C1h)
+	- fix final RCSTA bank
+	- fix for picbasic (don't forget to add the directive: "Define LOADER_USED 1")
+	- minor modification for trayicon: RightClick->show/hide    DoubleLeftClick->Write
+	    (useful for writing without showing main window)
+	- save position&size&settings
+	- included some .asm files with modifications for 16F873, 16F88
+
+1.63(Mar/Apr.2004)
+	- little things added
+1.6 (Noe.2003)
+	- all structures modified to be byte-oriented
+	- fixed read_hex: for MPLAB C18 generating odd number of bytes
+	- fixed read_hex: for CCS C writing info past End_of_file record
+	- added read_hex: check CRC
+	- tinybld.asm (for PIC16) - fixed write_eeprom 
+
+ToDo:
+	- option when "searching" ignore serial data sent by PIC (except C1h identifier)
+
+
+The project is written in Delphi, can be found at:
+http://www.etc.ugal.ro/cchiculita/software/picbootloader.htm
+
+for the serial communication is using: SynaSer library,(c)2001-2002, Lukas Gebauer;
+
+I developed it on the 16f876A and 18F252 devices, so take as reference
+tinybld16F.asm  and  tinybld18F.asm
+For some (more different) devices there are some source files; 
+modifications are done by other users, I have only confirmations that works.
+
+You are free to use the PC application and you can modify the PIC source files 
+for your purposes, but don't forget to mention the original source of inspiration
+and the author.

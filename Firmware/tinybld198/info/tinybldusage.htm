@@ -1,0 +1,203 @@
+<html>
+<head>
+<title>Tiny PIC bootloader</title>
+<link rel="stylesheet" type="text/css" href="software.css" tppabs="http://www.etc.ugal.ro/cchiculita/software/software.css">
+<meta name="keywords" content="PIC, bootloader, microchip, microcontroller, PIC16F, PIC18F, tiny bootloader">
+</head>
+
+<body>
+<h1>Usage for Tiny PIC bootloader</h1>
+<p>After you browse or enter the name of the hex file, select the COM port and 
+baud rate:</p>
+<ol>
+	<li>You can keep the TinyBootloader interface opened,&nbsp; then click WriteFlash, or 
+double-click the tray icon, and after that reset (or power-up) the PIC. If your 
+	program is continuously sending serial data to PC, (that will be interpreted 
+	as a bootloader response) use the second method:<li>first press PIC reset, 
+	click WriteFlash, then release PIC reset;<li>Use a hardware (RTS) or 
+	software reset (codes to send first).</ol>
+	If all things are set up properly the program will be loaded into the pic and 
+executed.
+<H3>Write Flash</H3>
+<div align="left">
+	<table border="1" width="800" style="border-collapse: collapse" id="table5">
+		<tr>
+			<td valign="top">
+<img border="0" src="tbld06.gif"></td>
+			<td valign="top">
+<ol>
+	<li>
+	<p align="left">Connects to the specified port with the chosen baud rate 
+	(both are editable, any value can be typed in)</li>
+<li>
+<p align="left">Reads and analyzes the hex file, determines if it's a 16F or 18F 
+code, determine the size, eeprom and 
+config data; check for a goto in the first 4 words, and gives warnings if 
+necessary;</li>
+	<li>
+	<p align="left">Pings the serial port (with the &quot;Code sent by PC for 
+	activation&quot;) at a rate given by &quot;Timeout&quot; until there is a response from the PIC or 
+until the &quot;SearchDelay&quot; timeout will expire.</li>
+	<li>
+	<p align="left">When a response from the PIC is received the PIC type is 
+	identified and the user program written.<br>
+	(no eeprom or config words are written. if needed, this can be done by using 
+	one of the available commands).</li>
+</ol>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<h3>Commands</h3>
+<div align="left">
+	<table border="1" width="800" style="border-collapse: collapse" id="table2">
+		<tr>
+			<td valign="top">
+<img border="0" src="tbld01.gif"></td>
+			<td valign="top">Command line parameter: hex filename to be written.
+			<p>When using a command line parameter writing flash will start 
+			automatically.</p>
+			<p>&nbsp;</td>
+		</tr>
+	</table>
+</div>
+Some commands that can be written in the Log window:<table border="1" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="table1">
+	<tr>
+		<td width="30%"><font face="Courier" size="2">?</font></td>
+		<td width="70%"><font face="Courier" size="2">help</font></td>
+	</tr>
+	<tr>
+		<td width="30%"><font face="Courier" size="2">ontop </font></td>
+		<td width="70%"><font size="2">keep the window on top of the others</font></td>
+	</tr>
+	<tr>
+		<td width="30%"><font face="Courier" size="2">logdetails </font></td>
+		<td width="70%"><font size="2">lists detailed stuff happening inside (used only for debugging)</font></td>
+	</tr>
+	<tr>
+		<td width="30%"><font face="Courier" size="2">clearallflash </font></td>
+		<td width="70%"><font size="2">clears all flash except the bootloader (actually it <b>fills</b> 
+    all flash with FFh)</font></td>
+	</tr>
+	<tr>
+		<td width="30%"><font face="Courier" size="2">writeeeprom &lt;addr&gt; &lt;dat&gt;</font></td>
+		<td width="70%"><font size="2">writes the byte &lt;dat&gt; at the address &lt;addr&gt; (numbers can be 
+    either dec or hex)<br>eg: <font face="Courier">&nbsp; writeeeprom 0 b6h&nbsp;&nbsp;&nbsp; 
+		</font>&nbsp;- 
+    writes B6h in the first eeprom location</font></td>
+	</tr>
+	<tr>
+		<td width="30%"><font face="Courier" size="2">writeconfig &lt;adrLow&gt; &lt;dat&gt;</font></td>
+		<td width="70%"><font size="2">only for 18F; writes the configuration byte &lt;dat&gt; at the 
+    address 300000h+&lt;addrLow&gt;<br>eg: <font face="Courier">&nbsp; writeconfig 3 FFh&nbsp;&nbsp;&nbsp; 
+		</font>&nbsp;- 
+    activates WDT</font></td>
+	</tr>
+	</table>
+<p align="left">&nbsp;</p>
+<h3>Options</h3>
+<table border="1" width="800" style="border-collapse: collapse" id="table3">
+	<tr>
+		<td valign="top">
+<img border="0" src="tbld02.gif"></td>
+		<td valign="top">
+		<ul>
+			<li>
+			<p align="justify">List of codes to send first: could be interpreted by a user 
+			program as a reset (or activate bootloader command);</li>
+			<li>
+			<p align="justify">&quot;SearchDelay&quot; is the amount of time the 
+			application will try to contact the pic.</li>
+			<li>
+			<p align="justify">&quot;Timeout&quot; is the ping interval; also it acts as a 
+			timeout&nbsp; for all serial operations. If you expect large 
+			communication delays, you should increase this (but don't forget to 
+			also increase the timeout in tinybld)</li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top">
+        <img src="resetPIC.gif"></td>
+		<td valign="top">
+		<ul>
+			<li>Reset could also be performed by hardware, &quot;Reset PIC using RTS 
+			line&quot;. There are several ways to do it; some require that after 
+			reset the RTS should remain low, others prefer &quot;RTS to remain 
+			active&quot;</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<h3>Terminal</h3>
+<table border="1" width="800" style="border-collapse: collapse" id="table4">
+	<tr>
+		<td valign="top">
+<img border="0" src="tbld04.gif"></td>
+		<td valign="top">A rudimentary Terminal, with the following 
+		possibilities:<ul>
+			<li>Display received data as text, hex dump or character codes.</li>
+			<li>Automatically saves raw data to the specified file (rewrite at 
+			every terminal activation).</li>
+			<li>Can send:<ul>
+			<li>ascii string</li>
+			<li>one by one characters as you type</li>
+			<li>decimal or hex codes</li>
+		</ul>
+			</li>
+			<li>It has a limited (adjustable) display buffer (default 10k)</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<p align="center">
+&nbsp;</p>
+<h2>What do you need</h2>
+<H3>Hardware</H3>
+	<ul>
+	<li>An external programmer is needed (only) the first time in order to write the bootloader into the PIC</li>
+	<li>On your board, you must have the PIC (pins TX,RX) connected to the serial port of the PC 
+(pins Rx,Tx), usually using a MAX232 level converter:<br>
+<img border="0" src="max232.gif" width="450" height="236"> </li>
+	</ul>
+<H3>Software</H3>
+<ol>
+	<li>You can use one of the provided .hex files or</li>
+	<li>Modify tinybld.asm and assemble it using MPASM IDE (or Mpasmwin.exe)
+	<ul>
+		<li>Modify &quot;xtal&quot;, &quot;baud&quot;, &quot;_??_OSC&quot; to what you need; assemble it 
+(for example with .\MPLAB\MCHIP_Tools\Mpasmwin.exe); write the 
+HEX it with a PIC programmer; put the PIC on you board and connect it to the PC 
+serial port.</li>
+	</ul>
+	</li>
+	<li>Requirements for your program:<ul>
+<li>The program must meet this requirement: it must have in the first 4 words of 
+memory a GOTO to the start of the main program. (this is what the majority of the bootloaders require). 
+So in assembler it should look something like this:<table width=300 style="border-collapse: collapse; font-family:courier; font-size: 75%; padding: 0 3 0 3;" border="1" id="table6">
+<tr>
+<th>PIC16F</th>  
+<th>PIC16F</th>  <th>PIC18F</th>
+</tr>
+<tr>
+<td>org 0<br>;clrf STATUS<br>clrf PCLATH<br>goto Main</td>  
+<td>org 0<br>;clrf STATUS<br>pagesel Main<br>goto Main</td>  
+<td>org 0<br>goto Main<br>
+<br>
+&nbsp;</td>
+</tr>
+</table>
+<li>If you use a compiler, search the help for a directive that allows 
+coexistence with a bootloader;</ul>
+	</li>
+</ol>
+
+<p>Critics and suggestions at:&nbsp; <img src="../clmail.gif" width="169" height="15"></p>
+
+
+
+
+
+</body>
+</html>

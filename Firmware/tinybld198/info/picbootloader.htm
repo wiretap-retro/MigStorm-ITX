@@ -1,0 +1,335 @@
+<html>
+<head>
+<title>Tiny PIC bootloader</title>
+<link rel="stylesheet" type="text/css" href="software.css" tppabs="http://www.etc.ugal.ro/cchiculita/software/software.css">
+<meta name="keywords" content="PIC, bootloader, microchip, microcontroller, PIC16F, PIC18F, tiny bootloader">
+</head>
+
+<body>
+<h1>Tiny PIC bootloader</h1>
+<div class="nav">/<a class="no_u" href="../index.htm" tppabs="http://www.etc.ugal.ro/cchiculita/index.htm">HOME</a> &nbsp;=>&nbsp; .../<a href="index.htm#pic" tppabs="http://www.etc.ugal.ro/cchiculita/software/index.htm">Software</a> 
+  =&gt; <a href="index.htm#pic">OtherPICprojects</a></div>
+
+
+<h2>Tiny Bootloader</h2>
+
+<p>I consider firmware programs should be as small and as fast as possible. In the bootloader case all the hard work can be 
+moved to PC software, allowing a wider range of options and easier upgrades to the software, 
+while the firmware can implement only the basic functions.</p>
+
+<div align=center>
+<b>Download</b> <a href="tinybld173.zip"><b>tinybld173</b></a>&nbsp; Apr,2005</div>
+<div align=center>&nbsp;</div>
+<div align=center>some older versions:</div>
+<div align=center>
+	<table border="1" width="200" style="border-collapse: collapse" id="table1">
+		<tr>
+			<td> 
+
+
+<a href="tinybld17.zip"><font size="2">tinybld17</font></a></td>
+			<td><font size="2">Nov,2004</font></td>
+		</tr>
+		<tr>
+			<td>
+<a href="tinybld14.zip"><font size="2">tinybld14</font></a></td>
+			<td><font size="2">June,2003</font></td>
+		</tr>
+	</table>
+</div>
+<hr color="#000000" width="50%">
+
+
+<p>
+
+</p>
+<h4>Features of the firmware</h4>
+<ul>
+<li>Size of only 100 words; (both versions, for 16F and for 18F occupy less than 100 words);
+<li>Can write flash, eeprom and configuration bytes(18F);
+<li>On reset, waits 1 second for a message from the PC, if not received, launch user application;
+<li>Developed initially for: 16F876A, 16F877A, 18F252; <i>should work (with modifications)</i> on most 16F and 18F PICs;</li>
+<li>Reported to work with 16F873, 16F873A, 16F876, 16F877, 18F452, 18F2620, 18F8720, 18F8680, 18F4320, 18F1x20, 
+16F88; 18F2620;</li>
+<li>The .asm file can be easily modified and adapted for any frequency (or baudrate);</li>
+</ul>
+<h4>Features of the PC software</h4>
+<ul>
+<li>Can upload  programs into flash  (in current version eeprom and cfg bytes can be modified only from command line);
+<li>Works with both PIC 16F and 18F types; automatically detects PIC type, model, HEXcontent;
+<li>Remembers last settings;
+<li>In case of errors, performs retransmissions or tries to resynchronize with pic;
+<li>The communication settings are editable so you can write any COM number or 
+desired baud;<li>If a filename is specified as a command line parameter, it will 
+automatically try to write it;<li>Several features can be activated from 
+&quot;Options&quot;, others by writing the command in the log window. Start typing &quot;help&quot; or &quot;?&quot; on an empty line:<br>&nbsp;
+<table border="1" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber1">
+	<tr>
+		<td width="30%"><font face="Courier" size="2">?</font></td>
+		<td width="70%"><font face="Courier" size="2">help</font></td>
+	</tr>
+	<tr>
+		<td width="30%"><font face="Courier" size="2">ontop </font></td>
+		<td width="70%"><font size="2">keep the window on top of the others</font></td>
+	</tr>
+	<tr>
+		<td width="30%"><font face="Courier" size="2">logdetails </font></td>
+		<td width="70%"><font size="2">lists detailed stuff happening inside (used only for debugging)</font></td>
+	</tr>
+	<tr>
+		<td width="30%"><font face="Courier" size="2">clearallflash </font></td>
+		<td width="70%"><font size="2">clears all flash except the bootloader (actually it <b>fills</b> 
+    all flash with FFh)</font></td>
+	</tr>
+	<tr>
+		<td width="30%"><font face="Courier" size="2">writeeeprom &lt;addr&gt; &lt;dat&gt;</font></td>
+		<td width="70%"><font size="2">writes the byte &lt;dat&gt; at the address &lt;addr&gt; (numbers can be 
+    either dec or hex)<br>eg: <font face="Courier">&nbsp; writeeeprom 0 b6h&nbsp;&nbsp;&nbsp; 
+		</font>&nbsp;- 
+    writes B6h in the first eeprom location</font></td>
+	</tr>
+	<tr>
+		<td width="30%"><font face="Courier" size="2">writeconfig &lt;adrLow&gt; &lt;dat&gt;</font></td>
+		<td width="70%"><font size="2">only for 18F; writes the configuration byte &lt;dat&gt; at the 
+    address 300000h+&lt;addrLow&gt;<br>eg: <font face="Courier">&nbsp; writeconfig 3 FFh&nbsp;&nbsp;&nbsp; 
+		</font>&nbsp;- 
+    activates WDT</font></td>
+	</tr>
+	</table>
+</ul>
+
+<p align="center">&nbsp;<img border="0" SRC="tinyBldWin.gif" width="346" height="125"></p>
+<h4>What do you need</h4>
+<ul>
+<li>MPASM installed</li>
+<li>Know how to use MPASM IDE (or Mpasmwin.exe) to modify and assemble an asm 
+file.</li>
+<li>You must have the PIC (pins TX,RX) connected to the serial port of the PC 
+(pins Rx,Tx), usually using a MAX232 level converter:<br>
+<img border="0" src="max232.gif" width="450" height="236">
+</ul>
+<p></p>
+<h4>How to use</h4>
+<ul>
+<li>The program must meet this requirement: it must have in the first 4words of 
+memory a GOTO to the start of the main program. (this is what the majority of the bootloaders require). 
+So in assembler it should look something like this:<table width=300 style="border-collapse: collapse; font-family:courier; font-size: 75%; padding: 0 3 0 3;" border="1">
+<tr>
+<th>PIC16F</th>  
+<th>PIC16F</th>  <th>PIC18F</th>
+</tr>
+<tr>
+<td>org 0<br>;clrf STATUS<br>clrf PCLATH<br>goto Main</td>  
+<td>org 0<br>;clrf STATUS<br>pagesel Main<br>goto Main</td>  
+<td>org 0<br>goto Main<br>
+<br>
+&nbsp;</td>
+</tr>
+</table>
+<li>If you use a compiler, search the help for a directive that allows 
+coexistence with a bootloader;<li>Modify &quot;xtal&quot;, &quot;baud&quot;, &quot;_??_OSC&quot; to what you need; assemble it 
+(for example with .\MPLAB\MCHIP_Tools\Mpasmwin.exe); write the 
+HEX it with a PIC programmer; put the PIC on you board and connect it to the PC 
+serial port.<li>You can keep the TinyBootloader interface opened, browse or enter the name 
+of the hex file, select the COM port and baud rate, then click WriteFlash, or 
+double-click the tray icon, and after that reset (or power-up) the PIC.<li>If all things are set up properly the program will be loaded into the pic and 
+executed.</ul>
+<ul type="circle">
+<li>When you press &quot;WriteFlash&quot; the application will read and analyze the hex 
+file to determine if it's a 16F or 18F code, and to determine the size, eeprom and 
+config data.</li>
+<li>Then it will ping the serial port until there is a response from the PIC or 
+until the timeout will expire.</li>
+<li>On the other side, the PIC (after reset), it will wait around 1s to receive something 
+from the PC. This timeout value can be adjusted from &quot;movlw xtal/2000000+1&quot;, but 
+decreasing this timeout too much will cause later communication to fail.</li>
+<li>A warning will be issued if: a goto is not found in the first 4 instructions 
+or if PIC and HEX files do not match.</li>
+</ul>
+
+<p>All critics and suggestions are welcome at:&nbsp; <img src="../clmail.gif" width="169" height="15"></p>
+
+
+
+
+<h2>General info about Bootloaders</h2>
+
+
+
+
+<p>A bootloader is a program that stays in the microcontroller and communicates 
+with the PC (usually through the serial interface). The bootlader receives a 
+user program from the PC and writes it in the flash memory, then launches this 
+program in execution. Bootloaders can only be used with those microcontrollers 
+that can write their eeprom through software. The bootloader itself must be 
+written into the flash memory with an external burner. In order for the 
+bootloader to be launched after each reset, a &quot;goto bootloader&quot; instruction must 
+exist somewhere in the first 4 instructions; it is the job of the bootloader to 
+reallocate the first 4 instructions of the user program to another location and 
+execute them when the bootloader exits.<br>
+<img border="0" src="bootloader.gif" width="327" height="388"></p>
+
+
+
+
+<p>(Some of the) Available bootloaders (as reported by Google) in May, 2003:</p>
+
+<TABLE border=1 cellpadding="1" cellspacing="1" width="634"
+		style="border-collapse: collapse; font-size: 75%; padding: 0 3 0 3;">
+<TR>
+	<TH>Bootloader Name / Author</TH>
+	<TH>Supported models</TH>
+	<TH>Size(words)</TH>
+	<TH>Comments</TH>
+</TR>
+<TR>
+	<TD><A HREF="http://www.microchip.com/">From Microchip</A><br>&nbsp;</TD>
+	<TD>16F,18F</TD>
+	<TD align=right>1000</TD>
+	<TD>uses Hyperterminal to upload hex files</TD>
+</TR>
+<TR>
+	<TD><A HREF="http://www.microchipc.com/">From MicrochipC</A><BR>&nbsp;</TD>
+	<TD>16F,16F*A,18F</TD>
+	<TD align=right>256/2000</TD>
+	<TD>+ok</TD>
+</TR>
+<TR>
+	<TD><A HREF="http://www.voti.nl/wloader/index_1.html">WLoader</A><br>Wouter van Ooijen</TD>
+	<TD>16f877</TD>
+	<TD align=right>1000</TD>
+	<TD>+does not use the UART, <br>
+    +the serial interface use only one I/O pin </TD>
+</TR>
+<TR>
+	<TD><a href="http://www.circuitcellar.com/flash2002/honorable.htm">ZPL</a><BR>Wouter van Ooijen</TD>
+	<TD>18F</TD>
+	<TD>
+    <p align="right">384</TD>
+	<TD>+unusual method using mclr: uses zero I/O pins !</TD>
+</TR>
+<TR>
+	<TD><A HREF="http://www.seanet.com/~karllunt/picload.htm">KarlLunt</A><BR>&nbsp;</TD>
+	<TD>16f87x</TD>
+	<TD align=right>512</TD>
+	<TD>-activation on input pin<br>
+    -derived from Microchip boot877.asm (uses Hyperterminal)</TD>
+</TR>
+<TR>
+	<TD><A HREF="http://www.dontronics.com/rfarmer.html">PICLOADER</A><BR>Rick Farmer </TD>
+	<TD>PIC16F87x</TD>
+	<TD align=right>2000</TD>
+	<TD>-program must start at 0x3; +password<br>
+    (uses Hyperterminal)</TD>
+</TR>
+<TR>
+	<TD><A HREF="http://www.nyx.net/~jpurbric/picstuff.htm">bootload</A><BR>&nbsp;</TD>
+	<TD>PIC16F877</TD>
+	<TD align=right>800</TD>
+	<TD>-written in C<br>
+    -command line DOS program</TD>
+</TR>
+<TR>
+	<TD><A HREF="http://www.thebytefactory.com/">theByteFactory</A><BR>&nbsp;</TD>
+	<TD>16F877</TD>
+	<TD align=right>1000</TD>
+	<TD>-written in C<br>
+    (uses Hyperterminal)</TD>
+</TR>
+<TR>
+	<TD><A HREF="http://members.rogers.com/martin.dubuc/Bootloader/">Jolt</A><BR>
+    Martin Dubuc</TD>
+	<TD>18F</TD>
+	<TD align=right>256</TD>
+	<TD>-user code and interrupt vectors need to be relocated;<br>
+&nbsp;Java GUI, +auto detect baud</TD>
+</TR>
+<TR>
+	<TD><a href="http://www.htsoft.com">?</a><br>
+    HI-TECH Software</TD>
+	<TD>16F87x</TD>
+	<TD align=right>256</TD>
+	<TD>-written in C</TD>
+</TR>
+<TR>
+	<TD><a href="http://www.ehl.cz/pic/pic_e.htm">PIC downloader</a><br>
+    Petr Kolomaznik</TD>
+	<TD>16F876</TD>
+	<TD align=right>256</TD>
+	<TD>-is rewritten and modified from HI-TECH<br>
+    +Windows interface</TD>
+</TR>
+<TR>
+	<TD><A HREF="http://www.johnsrud.no/pic/index.php">Ivar</A> Johnsrud<BR>&nbsp;</TD>
+	<TD>18Fxx2/18Fxx8</TD>
+	<TD align=right>360</TD>
+	<TD>-bootloader based on HiTech's<br>
+    -downloader based on Petr Kolomaznik's</TD>
+</TR>
+<TR>
+	<TD><A HREF="http://home.hiwaay.net/~jeffj1/projects/bootloader/">B</A> 
+    Bootloader<BR>&nbsp;</TD>
+	<TD>PIC16F87x, PIC16F87xA</TD>
+	<TD align=right>340</TD>
+	<TD>-called only by user application <br>
+    -written in C +Linux uploader</TD>
+</TR>
+<TR>
+	<TD><A HREF="http://www.mcjournal.com/articles/arc103/arc103.htm">SGupta</A><BR>&nbsp;</TD>
+	<TD>16f876</TD>
+	<TD align=right>256</TD>
+	<TD>&nbsp;</TD>
+</TR>
+<TR>
+	<TD colSpan=4 align=center>I put mine here, for comparison:</TD>
+</TR>
+<TR>
+	<TD>Tiny</TD>
+	<TD>16F876A, 18F252, ...</TD>
+	<TD align=right>100</TD>
+	<TD>+details above</TD>
+</TR>
+</TABLE>
+
+&nbsp;<p>I did it mainly because:<br>
+1. Some bootloaders I used previously had some unpleasant bugs or didn't support 
+the devices I had. <br>
+2. I wanted to do it small. Actually it can be done even smaller :) but I like 
+the size of 100;</p>
+<p><br>
+<br>
+
+
+<script type="text/javascript" src="http://ss.webring.com/navbar?f=j;y=ckiku;u=10089196"></script>
+<noscript><center><table bgcolor=gray cellspacing=0 border=2 bordercolor=red>
+<tr><td><table cellpadding=2 cellspacing=0 border=0><tr><td align=center>
+<font face=arial size=-1>This site is a member of WebRing. 
+To browse visit <a href="http://ss.webring.com/navbar?f=l;y=ckiku;u=10089196">
+here</a>.</font></td></tr></table></td></tr></table></center></noscript>
+
+
+<br>
+<!-- Begin Nedstat Basic code -->
+<!-- Title: tinybld -->
+<!-- URL: http://www.ac.ugal.ro/staff/ckiku/software/picbootloader.htm -->
+<script language="JavaScript" type="text/javascript" src="http://m1.nedstatbasic.net/basic.js">
+</script>
+<script language="JavaScript" type="text/javascript" >
+<!--
+  nedstatbasic("ACRb6QaqaQ7H8qmCHQcMYVhk1LUA", 0);
+// -->
+</script>
+<noscript>
+<a target="_blank" href="http://v1.nedstatbasic.net/stats?ACRb6QaqaQ7H8qmCHQcMYVhk1LUA"><img
+src="http://m1.nedstatbasic.net/n?id=ACRb6QaqaQ7H8qmCHQcMYVhk1LUA"
+border="0" nosave width="18" height="18"
+alt="Nedstat Basic - Free web site statistics"></a></noscript>
+</p>
+<!-- End Nedstat Basic code -->
+
+
+
+
+
+</body>
+</html>

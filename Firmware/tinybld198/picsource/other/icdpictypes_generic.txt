@@ -1,0 +1,47 @@
+For the newer PICs not defined in icdpictypes.inc,
+the following generic types have been defined:
+
+model             IdTypePIC  max_flash (this is the max address of PIC)
+
+18F w/4KB flash       0x60     0x800*2
+18F w/8KB flash       0x61    0x1000*2
+18F w/16KB flash      0x62    0x2000*2
+18F w/24KB flash      0x63    0x3000*2
+18F w/32KB flash      0x64    0x4000*2
+18F w/48KB flash      0x65    0x6000*2
+18F w/64KB flash      0x66    0x8000*2
+18F w/80KB flash      0x67    0xA000*2
+18F w/96KB flash      0x68    0xC000*2
+18F w/128KB flash     0x69   0x10000*2
+                    
+dsPIC w/6KB flash     0x90    0x1000
+dsPIC w/12KB flash    0x91    0x2000
+dsPIC w/24KB flash    0x92    0x4000
+dsPIC w/48KB flash    0x93    0x8000
+dsPIC w/66KB flash    0x94    0xB000
+dsPIC w/132KB flash   0x95   0x16000
+dsPIC w/144KB flash   0x96   0x18000
+
+
+In order to work with a new PIC not found in icdpictypes.inc:
+1. do NOT include the file icdpictypes.inc
+   (remove the line:  #include "../icdpictypes.inc")
+   and:
+2. define  max_flash  in bytes for the desired PIC 
+   (#define max_flash 0x4000*2  ; this is for a PIC with 16384 instruction words, with 2 bytes per instruction, resulting in 32768 bytes of flash) 
+3. assign to  IdTypePIC  the corresponding value from the above table.
+   (IdTypePIC = 0x64)
+
+Example: Suppose the PIC18F252 is not listed: Take the .asm for a simmilar PIC and modify it like this:
+
+	radix DEC
+	LIST      P=18F252
+	#include "p18f252.inc",
+xtal EQU 20000000	
+baud EQU 115200	
+IdTypePIC = 0x64                            ; code from table above
+	#define max_flash 0x4000*2              ; size of flash for 252 (32Kbytes == 16384 words == 0x4000 words)
+	#include "../spbrgselect.inc"
+	#define first_address max_flash-200
+....
+    
