@@ -14,5 +14,5 @@ As a DIY project, total cost for all parts and a board should come out to just u
 
 ## Rev History
 v0.4 -- Current rev to build. Corrected PS/2 Mouse & Keyboard pinout. \
-v0.3 -- Changed soft-power circuit from 555 timer to a MAX16054, cleaned up a few traces with lots of vias. Still need more cleanup. [depreciated rev] \
-v0.2 -- Initial rev with corrected 68k socket size. [depreciated rev]
+v0.3 -- Changed soft-power circuit from 555 timer to a MAX16054, cleaned up a few traces with lots of vias. Still need more cleanup. [depreciated rev, do not build] \
+v0.2 -- Initial rev with corrected 68k socket size. [depreciated rev, do not build]
