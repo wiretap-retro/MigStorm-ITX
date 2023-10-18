@@ -4,7 +4,7 @@ A 68000 socketed ITX form factor Minimig.
 ![pic](pic.png)
 
 ## Info
-Tested by Zenon to boot with Pistorm and CaffieneOS, also with a regular M68k CPU. It appears to be fully working, however it still needs further testing to confirm complete functionality. It also needs more general trace cleanup/enhancement. Build at your own risk.
+Tested by Zenon to boot with Pistorm and CaffeineOS, also with a regular M68k CPU. It appears to be fully working, however it still needs further testing to confirm complete functionality of all features. It also needs more general trace cleanup/enhancement. Build at your own risk.
 
 ## Mouser Cart
 https://www.mouser.com/ProjectManager/ProjectDetail.aspx?AccessID=da74540bb5 \
