@@ -8,7 +8,7 @@ Tested by Zenon to boot with Pistorm and CaffeineOS, also with a regular M68k CP
 
 ## Mouser Cart
 https://www.mouser.com/ProjectManager/ProjectDetail.aspx?AccessID=da74540bb5 \
-At the time of making the Mouser cart, the headphone jack and PS/2 ports are out of stock. They are able to be sourced from Arrow and Digikey. This cart may have items go in and out of stock depending on global shortages and EOL products. I recommend using Octopart and other similar sites to search for parts. I caution using sources like Ebay and Aliexpress for key components, especially from China-based sellers with little to no feedback since they'll often sell counterfeit items. Sometimes you get lucky, sometimes you don't. Primary/authorized retailers are highly recommended for component purchases so you do less troubleshooting and spent more time playing. \
+At the time of making the Mouser cart, all parts were in stock. If parts go out of stock, EOL, have a part number change, or have a minimum order quantity change -- seach for equivalent replacements or they may be able to be sourced from Arrow and Digikey. I recommend using Octopart and other similar sites to search for parts if you can't find something. I caution using sources like Ebay and Aliexpress for key components, especially from China-based sellers with little to no feedback since they'll often sell counterfeit items. Sometimes you get lucky, sometimes you don't. Primary/authorized retailers are highly recommended for component purchases so you do less troubleshooting and spent more time playing. \
 \
 As a DIY project, total cost for all parts and a board should come out to just under $150. (plus the cost of a CPU/Pistorm, power supply, and case) \
 \
