@@ -14,7 +14,7 @@ As a DIY project, total cost for all parts and a board should come out to just u
 \
 An interactive HTML BOM has been added to the main repository to assist with building.
 
-## Other Stuff
+## Other / Misc. Contributions
 jjsaenz1969's 3D printed case for Migstorm: https://www.thingiverse.com/thing:7063501
 
 ## Rev History
